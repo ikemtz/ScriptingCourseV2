@@ -63,27 +63,38 @@
           </td>
         </tr>
         <tr>
-          <td colspan="1">
-            <button class="btn btn-danger" type="button" onclick="slowDown()">
-              Slower -10
-            </button>
-          </td>
-          <td colspan="4">
+          <td colspan="6">
             <input
               class="form-control-range"
               type="range"
-              min="1"
-              step="5"
+              min="0"
+              step="10"
               max="100"
               value="50"
               class="slider"
               id="speedRange"
-              oninput="updateRoller(this.value)"
-              onchange="updateRoller(this.value)"
+              onchange="updateRoller(parseInt(this.value))"
             />
           </td>
-          <td colspan="1">
-            <button class="btn btn-success" type="button" onclick="speedUp()">
+        </tr>
+        <tr>
+          <td colspan="3">
+            <button
+              class="btn btn-danger"
+              id="slowDown"
+              type="button"
+              onclick="slowDown()"
+            >
+              Slower -10
+            </button>
+          </td>
+          <td colspan="3">
+            <button
+              class="btn btn-success"
+              id="speedUp"
+              type="button"
+              onclick="speedUp()"
+            >
               Faster +10
             </button>
           </td>
