@@ -7,23 +7,55 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/styles/commentator.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/profile_icon.png">
     <Title>Isaac Martinez COP-2830C</Title>
 </head>
 
-<body class="text-center">
+<body class="container text-center">
     <navElement></navElement>
     <h3>Commentator</h3>
 
     <div class="container mt-3">
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group text-left">
-                    <label for="txtComment">Comment</label>
+                <div class="form-group">
+                    <div class="d-flex justify-content-between">
+                        <label for="txtComment">Add A New Comment:</label>
+                        <div class="row mb-2">
+                            <Label class="col-md-6" for="language">Language:</Label>
+                            <select class="col-md-6 form-control" id="language" onchange="domData.language = this.value;">
+                                <option value="en">English</option>
+                                <option value="es">Spanish</option>
+                                <option value="pt-PT">Portugese</option>
+                                <option value="fr">French</option>
+                                <option value="it">Italian</option>
+                                <option value="de">German</option>
+                                <option value="el">Greek</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <textarea class="form-control" id="txtComment" rows="6"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary" onclick="submitComment();">Submit</button>
+            </div>
+        </div>
+        <div class="row mt-5 border-top border-info">
+            <div class="col-md-12 mt-4">
+                <h4>Previous Comments</h4>
+            </div>
+        </div>
+        <div id="comments" class="row">
+            <div id="noData" class="col-md-12">
+                No Data Available
+            </div>
+            <div class="d-none">
+                <div id="commentTemplate">
+                    <div class="col-md-10 p-2 border-bottom text-left">{{comment}}</div>
+                    <div class="col-md-1 p-2 border-bottom text-right">{{language}}</div>
+                    <div class="col-md-1 p-2 border-bottom text-{{color}}">{{score}}%</div>
+                </div>
             </div>
         </div>
     </div>
