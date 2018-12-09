@@ -7,26 +7,35 @@ const speedElm = document.getElementById('speed');
 const die1Elm = document.getElementById('die1');
 const die2Elm = document.getElementById('die2');
 const rollsElm = document.getElementById('rolls');
+const speedRangeElm = document.getElementById('speedRange');
 let isEmpty;
 
 function speedUp() {
-  if (speed === 0) {
-    return;
+  if (speed <= 10) {
+    updateRoller(1);
+  } else if (0 < speed % 10) {
+    updateRoller(speed - (speed % 10));
+  } else {
+    updateRoller(speed - 10);
   }
-  speed -= 10;
-  clearInterval(interval);
-  rollTheDice();
 }
 
 function slowDown() {
-  if (speed === 100) {
-    return;
+  if (speed >= 90) {
+    updateRoller(99);
+  } else if (0 < speed % 10) {
+    updateRoller(speed + ((10 - speed) % 10));
+  } else {
+    updateRoller(speed + 10);
   }
-  speed += 10;
+}
+
+function updateRoller(updatedSpeed) {
+  speed = updatedSpeed;
+  speedRangeElm.value = speed;
   clearInterval(interval);
   rollTheDice();
 }
-
 // Takes the current dice and add it's to the DOM.
 function captureRoll() {
   if (isEmpty) {
