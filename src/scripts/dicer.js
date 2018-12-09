@@ -7,6 +7,8 @@ const speedElm = document.getElementById('speed');
 const die1Elm = document.getElementById('die1');
 const die2Elm = document.getElementById('die2');
 const rollsElm = document.getElementById('rolls');
+const speedUpElm = document.getElementById('speedUp');
+const slowDownElm = document.getElementById('slowDown');
 const speedRangeElm = document.getElementById('speedRange');
 let isEmpty;
 
@@ -32,6 +34,8 @@ function slowDown() {
 
 function updateRoller(updatedSpeed) {
   speed = updatedSpeed;
+  slowDownElm.disabled = speed >= 91;
+  speedUpElm.disabled = speed <= 9;
   speedRangeElm.value = speed;
   clearInterval(interval);
   rollTheDice();
