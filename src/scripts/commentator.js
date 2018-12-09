@@ -2,11 +2,24 @@ let domData = {
   commentTemplate: document.getElementById('commentTemplate').innerHTML.trim(),
   comments: document.getElementById('comments'),
   noData: document.getElementById('noData'),
-  language: 'en',
+  currentLanguage: 'en',
+  cmbLanguages: document.getElementById('cmbLanguage'),
   comment: document.getElementById('txtComment')
 };
 const cogUrl =
   'https://ikemtz-cognitiveservices.azurewebsites.net/api/comments';
+
+let languages = {
+  en: 'English',
+  es: 'Spanish',
+  fr: 'French',
+  it: 'Italian',
+  de: 'German',
+  el: 'Greek',
+  'pt-PT': 'Portugese'
+};
+
+// Validates and submits a comment to cognitive service
 async function submitComment() {
   var txt = domData.comment.value.trim();
   if (txt.length < 15) {
@@ -22,7 +35,7 @@ async function submitComment() {
     const resp = await httpRequestWrapper(
       cogUrl,
       JSON.stringify({
-        language: domData.language,
+        language: domData.currentLanguage,
         text: txt
       }),
       [
@@ -33,54 +46,50 @@ async function submitComment() {
       ]
     );
     if (resp) {
-      addCommentToPreviousGrid(txt, domData.language, JSON.parse(resp).score);
+      addCommentToPreviousGrid(
+        txt,
+        domData.currentLanguage,
+        JSON.parse(resp).score
+      );
     }
   }
 }
+
+//Adds an individual comment to grid
 function addCommentToPreviousGrid(comment, language, score) {
   if (!domData.noData.classList.contains('d-none')) {
     domData.noData.classList.add('d-none');
   }
   let rounded = Math.round(score * 100);
   let color = 'success';
-  let lang;
-  switch (language) {
-    case 'en':
-      lang = 'English';
-      break;
-    case 'es':
-      lang = 'Spanish';
-      break;
-    case 'fr':
-      lang = 'French';
-      break;
-    case 'it':
-      lang = 'Italian';
-      break;
-    case 'de':
-      lang = 'German';
-      break;
-    case 'el':
-      lang = 'Greek';
-      break;
-    case 'pt-PT':
-      lang = 'Portugese';
-      break;
-  }
+  let lang = languages[language];
+
   if (rounded < 33) {
     color = 'danger';
   } else if (rounded < 66) {
     color = 'warning';
   }
   domData.comments.innerHTML = `${domData.commentTemplate
-    .replace('{{comment}}', comment)
-    .replace('{{score}}', `${rounded}`)
-    .replace('{{language}}', `${lang}`)
-    .replace('{{color}}', `${color}`)}${domData.comments.innerHTML}`;
+    .replace(/{{[\s]?Comment[\s]?}}/i, comment)
+    .replace(/{{[\s]?score[\s]?}}/i, `${rounded}`)
+    .replace(/{{[\s]?language[\s]?}}/i, `${lang}`)
+    .replace(/{{[\s]?color[\s]?}}/i, `${color}`)}${domData.comments.innerHTML}`;
 }
+
+//Adding list of lanugages declared above as options in cmbLangues.
+function addLanguagesToDropDown() {
+  for (const lang in languages) {
+    const opt = document.createElement('option');
+    opt.text = languages[lang];
+    opt.value = lang;
+    domData.cmbLanguages.add(opt);
+  }
+}
+
 (async () => {
   const resp = await httpRequestWrapper(cogUrl);
   const previousData = JSON.parse(resp);
+  addLanguagesToDropDown();
   previousData.forEach(x => {
     addCommentToPreviousGrid(x.text, x.language, x.score);
   });
