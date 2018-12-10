@@ -6,9 +6,7 @@ let domData = {
   cmbLanguages: document.getElementById('cmbLanguage'),
   comment: document.getElementById('txtComment')
 };
-const cogUrl =
-  'https://ikemtz-cognitiveservices.azurewebsites.net/api/comments';
-
+const cogUrl = 'https://ikemtz-cognitiveservices.azurewebsites.net/api/comments';
 let languages = {
   en: 'English',
   es: 'Spanish',
@@ -34,10 +32,10 @@ async function submitComment() {
     domData.comment.value = '';
     const resp = await httpRequestWrapper(
       cogUrl,
-      JSON.stringify({
+      {
         language: domData.currentLanguage,
         text: txt
-      }),
+      },
       [
         {
           name: 'Content-Type',

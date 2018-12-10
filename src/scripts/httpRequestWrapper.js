@@ -1,10 +1,9 @@
 'Strict Mode';
 // My own code that allows me simply the making of XHR requests
-// TODO: Need to refactor to Async.
 function httpRequestWrapper(url, body = null, headers = []) {
   return new Promise((resp, err) => {
     const req = new XMLHttpRequest();
-    req.timeout = 500;
+    req.timeout = 5000; //5 seconds
     req.onreadystatechange = () => {
       if (req.readyState === 4) {
         if (req.status === 200) {
