@@ -18,15 +18,15 @@ const board = {
   c2: null
 };
 
-let x = false;
+let isCurrentPlayerX = false;
 
 function drawBoard() {
   if (!(gameFinished = checkForWinner())) {
-    x = !x;
-    document.getElementById('currentPlayer').innerText = x ? "X" : "O";
+    isCurrentPlayerX = !isCurrentPlayerX;
+    document.getElementById('currentPlayer').innerText = isCurrentPlayerX ? "X" : "O";
   }
   else {
-    alert(`Player ${x ? "X" : "O"} won!`);
+    alert(`Player ${isCurrentPlayerX ? "X" : "O"} won!`);
   }
   for (var item in board) {
     document.getElementById(item).innerHTML = board[item] === null ? null : board[item] ? xElement : oElement;
@@ -80,7 +80,7 @@ function resetGame() {
     board[item] = null;
     document.getElementById(`${item}`).classList.remove('winningTile');
   }
-  x = !x;
+  isCurrentPlayerX = !isCurrentPlayerX;
   drawBoard();
 }
 
@@ -92,7 +92,7 @@ function tileClicked(tile) {
     alert('The current game has finished, no more moves are allowed!');
   }
   else {
-    board[tile] = x;
+    board[tile] = isCurrentPlayerX;
     drawBoard();
   }
 }
