@@ -1,0 +1,14 @@
+.tile {
+  min-height: 100px;
+  background-color: skyblue;
+  border-radius: 5px;
+  font-weight: bolder;
+  font-size: 65px;
+}
+.winningTile { 
+  background-color: lightgreen; 
+}
+.tile div{ 
+  margin-top: auto;
+  margin-bottom: auto;
+}
